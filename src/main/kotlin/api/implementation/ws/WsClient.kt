@@ -33,6 +33,8 @@ class WsClient(
         })
     }
 
+
+    // todo Мб удалить?
     @Step("Execute script via WebSocket")
     fun executeScript(
         closeConnectionAfterTask: Boolean = false,

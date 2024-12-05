@@ -1,11 +1,5 @@
 package utils
 
-import io.qameta.allure.Step
+import io.qameta.allure.Allure
 
-inline operator fun <T> String.invoke(crossinline block: () -> T): T {
-    return invokeStep(this, block)
-}
-
-@Step("{stepName}")
-@Suppress("UNUSED_PARAMETER")
-inline fun <T> invokeStep(stepName: String, crossinline script: () -> T): T = script()
+operator fun <T> String.invoke(block: () -> T): T = Allure.step(this, block)

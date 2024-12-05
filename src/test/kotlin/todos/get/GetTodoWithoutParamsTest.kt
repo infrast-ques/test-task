@@ -9,18 +9,13 @@ import todos.TodosGet
 import utils.invoke
 
 @TodosGet
-class GetTodoWithoutParamsTest : TodosBaseTest() {
+class GetTodoWithoutParamsTest : GetTodosIsolateTest() {
 
     private val createRequests = List(20) { todoUtils.todoRequestData() }
 
     @BeforeEach
     fun setUp() {
-        // Тест изолирован
-        "Удалить все записи" {
-            getTodos().forEach {
-                deleteTodo(it.id)
-            }
-        }
+        deleteAllTodos()
 
         "Создать ${createRequests.size} записей" {
             createRequests.forEach { createTodo(request = it) }

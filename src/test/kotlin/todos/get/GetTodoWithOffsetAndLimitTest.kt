@@ -2,6 +2,8 @@ package todos.get
 
 import api.dto.TodosRequest
 import api.dto.TodosResponseItem
+import api.services.apiClientTodos
+import api.services.todosDelete
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.DisplayName
@@ -9,6 +11,7 @@ import org.junit.jupiter.params.ParameterizedTest
 import org.junit.jupiter.params.provider.CsvSource
 import todos.TodosGet
 import utils.invoke
+import java.net.HttpURLConnection
 
 @TodosGet
 class GetTodoWithOffsetAndLimitTest : GetTodosIsolateTest() {
@@ -18,12 +21,7 @@ class GetTodoWithOffsetAndLimitTest : GetTodosIsolateTest() {
 
     @BeforeAll
     fun setUp() {
-        // Тест изолирован
-        "Удалить все записи" {
-            getTodos().forEach {
-                deleteTodo(it.id)
-            }
-        }
+        deleteAllTodos()
 
         createRequests = List(20) { todoUtils.todoRequestData() }
         expectedResponse = createRequests.map { it.toTodoResponse() }

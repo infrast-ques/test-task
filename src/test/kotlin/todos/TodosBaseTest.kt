@@ -49,18 +49,20 @@ abstract class TodosBaseTest {
                 ?: throw NoSuchElementException("Todo with id = ${expectedTodo.id} not found")
         }
 
-        SoftAssertions.assertSoftly {
-            it.assertThat(actualTodo.id)
-                .describedAs("Проверить поле id")
-                .isEqualTo(expectedTodo.id)
+        "Проверить запись" {
+            SoftAssertions.assertSoftly {
+                it.assertThat(actualTodo.id)
+                    .describedAs("Проверить поле id")
+                    .isEqualTo(expectedTodo.id)
 
-            it.assertThat(actualTodo.text)
-                .describedAs("Проверить поле text")
-                .isEqualTo(expectedTodo.text)
+                it.assertThat(actualTodo.text)
+                    .describedAs("Проверить поле text")
+                    .isEqualTo(expectedTodo.text)
 
-            it.assertThat(actualTodo.completed)
-                .describedAs("Проверить поле completed")
-                .isEqualTo(expectedTodo.completed)
+                it.assertThat(actualTodo.completed)
+                    .describedAs("Проверить поле completed")
+                    .isEqualTo(expectedTodo.completed)
+            }
         }
     }
 
