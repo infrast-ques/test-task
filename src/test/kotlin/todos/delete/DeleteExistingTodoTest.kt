@@ -1,6 +1,5 @@
 package todos.delete
 
-import listeners.threadLocalTodosIds
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -23,9 +22,7 @@ class DeleteExistingTodoTest : TodosBaseTest() {
     @Test
     @DisplayName("DELETE /todos -> 204 no content: delete todo")
     fun test() {
-        threadLocalTodosIds
         deleteTodo(createToDeleteRequest.id)
-        threadLocalTodosIds
         checkTodoNotExist(createToDeleteRequest.id)
         "Проверить, что другая запись не удалилась" {
             checkTodos(createRequest)

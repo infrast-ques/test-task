@@ -3,11 +3,12 @@ package todos.get
 import api.services.apiClientTodos
 import api.services.todosDelete
 import org.junit.jupiter.api.TestInstance
+import org.junit.jupiter.api.parallel.Isolated
 import todos.TodosBaseTest
 import utils.invoke
 import java.net.HttpURLConnection
 
-
+@Isolated
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 abstract class GetTodosIsolateTest : TodosBaseTest() {
 

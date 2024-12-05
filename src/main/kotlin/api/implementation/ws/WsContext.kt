@@ -13,7 +13,7 @@ data class WsContext(
     inline fun <reified T : Any> getMessages(): List<T> =
         receivedMessages.mapNotNull {
             try {
-                SerializationUtils.fromJson(it!!)
+                SerializationUtils.fromJson<T>(it!!)
             } catch (e: Exception) {
                 Allure.addAttachment("Serialisation error", it)
                 null
