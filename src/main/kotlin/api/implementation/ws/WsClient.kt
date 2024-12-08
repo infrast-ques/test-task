@@ -40,30 +40,23 @@ class WsClient(
         closeConnectionAfterTask: Boolean = false,
         block: WebSocketClient.() -> Unit
     ) {
-        runBlocking {
-            try {
-                if (isOpen.not()) {
-                    "Establish WebSocket connection" {
-                        connectBlocking()
-                    }
+        try {
+            if (isOpen.not()) {
+                "Establish WebSocket connection" {
+                    connectBlocking()
                 }
+            }
 
-                withTimeout(timeout) {
-                    "Execute script" {
-                        block()
-                    }
-                }
+            "Execute script" {
+                block()
+            }
 
-            } catch (e: TimeoutCancellationException) {
-                Allure.addAttachment("WebSocket timeout", "Task execution exceeded ${timeout.seconds} seconds")
-                throw RuntimeException("Task execution timed out", e)
-            } catch (e: Exception) {
-                Allure.addAttachment("WebSocket error", e.message)
-                throw e
-            } finally {
-                if (closeConnectionAfterTask) {
-                    closeBlocking()
-                }
+        } catch (e: Exception) {
+            Allure.addAttachment("Error", e.message)
+            throw e
+        } finally {
+            if (closeConnectionAfterTask) {
+                closeBlocking()
             }
         }
     }
