@@ -19,7 +19,7 @@ class TestsListener : AfterEachCallback, AfterAllCallback {
 
     @Step("[JUNIT][AFTER EACH] Post test fixture")
     override fun afterEach(context: ExtensionContext?) {
-        closeWsConnection(threadLocalWebSocket.get())
+        closeWsConnection(threadLocalWebSocket.get().map { it })
     }
 
     @Step("[JUNIT][AFTER ALL] Post test fixture")
@@ -37,7 +37,7 @@ class TestsListener : AfterEachCallback, AfterAllCallback {
     }
 
     @Step("Close WebSocket connection")
-    private fun closeWsConnection(wsClients: MutableSet<WebSocketClient>) {
+    private fun closeWsConnection(wsClients: Collection<WebSocketClient>) {
         wsClients.forEach {
             it.closeBlocking()
         }

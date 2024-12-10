@@ -2,9 +2,6 @@ package api.implementation.ws
 
 import io.qameta.allure.Allure
 import io.qameta.allure.Step
-import kotlinx.coroutines.TimeoutCancellationException
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.time.withTimeout
 import listeners.threadLocalWebSocket
 import org.java_websocket.client.WebSocketClient
 import org.java_websocket.handshake.ServerHandshake
@@ -59,6 +56,11 @@ class WsClient(
                 closeBlocking()
             }
         }
+    }
+
+    override fun closeBlocking() {
+        super.closeBlocking()
+        threadLocalWebSocket.get().remove(this)
     }
 
     override fun send(text: String) {
